@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaselExportLambda", "BaselExportLambda\BaselExportLambda.csproj", "{C647D653-B3C4-49EB-AAA7-198D381EF9AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaselExportLambda.Tests", "BaselExportLambda.Tests\BaselExportLambda.Tests.csproj", "{422D36FF-35F0-4B75-B718-B6A566A3462D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaselExportMonitorLambda", "BaselExportMonitorLambda\BaselExportMonitorLambda.csproj", "{D8B649C3-58AB-4995-8EE9-C6F1B05C7637}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaselExportMonitorLambda.Tests", "BaselExportMonitorLambda.Tests\BaselExportMonitorLambda.Tests.csproj", "{BB00B6E2-62BE-49E6-899B-D6BD71EBD1A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaselExportLambda.Core", "BaselExportLambda.Core\BaselExportLambda.Core.csproj", "{ED9083ED-32A3-4845-8268-EF1B102C1C52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C647D653-B3C4-49EB-AAA7-198D381EF9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C647D653-B3C4-49EB-AAA7-198D381EF9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C647D653-B3C4-49EB-AAA7-198D381EF9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C647D653-B3C4-49EB-AAA7-198D381EF9AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{422D36FF-35F0-4B75-B718-B6A566A3462D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{422D36FF-35F0-4B75-B718-B6A566A3462D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{422D36FF-35F0-4B75-B718-B6A566A3462D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{422D36FF-35F0-4B75-B718-B6A566A3462D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B649C3-58AB-4995-8EE9-C6F1B05C7637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B649C3-58AB-4995-8EE9-C6F1B05C7637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B649C3-58AB-4995-8EE9-C6F1B05C7637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B649C3-58AB-4995-8EE9-C6F1B05C7637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB00B6E2-62BE-49E6-899B-D6BD71EBD1A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB00B6E2-62BE-49E6-899B-D6BD71EBD1A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB00B6E2-62BE-49E6-899B-D6BD71EBD1A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB00B6E2-62BE-49E6-899B-D6BD71EBD1A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED9083ED-32A3-4845-8268-EF1B102C1C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED9083ED-32A3-4845-8268-EF1B102C1C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED9083ED-32A3-4845-8268-EF1B102C1C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED9083ED-32A3-4845-8268-EF1B102C1C52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A30FFBBA-858C-47B9-B583-A05B13D3603A}
+	EndGlobalSection
+EndGlobal

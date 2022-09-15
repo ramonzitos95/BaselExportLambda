@@ -1,0 +1,6 @@
+Conta PROD:
+ - 204908700813
+
+Região: sa-east-1
+
+1 - executar infraascode.yaml via cloud formation, nome do stack: basel-export-lambda

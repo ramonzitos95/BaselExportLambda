@@ -1,0 +1,127 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Basel export lambda"
+Parameters:
+    Stage:
+        Type: String
+        AllowedValues:
+          - dev
+          - uat
+          - prod
+        Default: dev
+    LambdaCodeKey:
+        Type: String
+        Default: code_lambda_basel_export/BaselExportLambda.zip         
+        #Código abaixo somente em ambiente de dev
+        #Default: BaselExportLambda.zip         
+Mappings:
+    Environment:
+        dev:           
+            lambdaRole: arn:aws:iam::140408915023:role/role-lambda-mars-calendar
+            s3NotificationBucketArn: arn:aws:s3:::bucket-mars-basel-export-dev1
+            eventRuleArn: arn:aws:lambda::140408915023:function:BaselExportLambda-dev
+            s3LambdaCodeBucket: bucket-mars-basel-export-dev
+            environmentService: '{ "Environment": "DEV_ENV" }'
+            securityGroupId: 
+                - sg-0d3941213283337e7
+            subnetId:
+                - subnet-06a959e139ebef8a6
+                - subnet-036206aba61def831
+        uat:
+            lambdaRole: arn:aws:iam::605369524179:role/role-lambda-default
+            s3NotificationBucketArn: arn:aws:s3:::bucket-mars-basel-export
+            eventRuleArn: arn:aws:lambda::605369524179:function:BaselExportLambda-uat
+            s3LambdaCodeBucket: bucket-mars-basel-code-lambda
+            environmentService: '{ "Environment": "UAT_ENV" }'
+            securityGroupId: 
+                - sg-9f9b49e6
+            subnetId:
+                - subnet-00ae5fe95e3ccbf5b
+                - subnet-0ac970cdcaf94c71b
+        prod:
+            lambdaRole: arn:aws:iam::204908700813:role/role-lambda-default
+            s3NotificationBucketArn: arn:aws:s3:::bucket-mars-basel-export-prod
+            eventRuleArn: arn:aws:lambda::204908700813:function:BaselExportLambda-prod
+            s3LambdaCodeBucket: bucket-mars-basel-code-lambda
+            environmentService: '{ "Environment": "RELEASE_ENV" }'
+            securityGroupId: 
+                - sg-08271f019e9f62bc8
+            subnetId:
+                - subnet-0457de1e0af487e26
+                - subnet-0dcdbab9631f616ff
+Resources:
+    BaselExportLambda:
+        Type: AWS::Lambda::Function
+        Properties:
+            FunctionName: !Sub BaselExportLambda-${Stage}
+            Handler: BaselExportLambda::BaselExportLambda.Function::FunctionHandler
+            Runtime: dotnet6
+            Layers: [ !Ref LambdaLayer ]
+            Role: !FindInMap [ Environment, { Ref: Stage }, lambdaRole ]
+            Code: 
+                S3Bucket: !FindInMap [ Environment, { Ref: Stage }, s3LambdaCodeBucket ]
+                S3Key: !Ref LambdaCodeKey
+            Timeout: 900
+            MemorySize: 4096
+            VpcConfig:
+                SecurityGroupIds: !FindInMap [ Environment, { Ref: Stage }, securityGroupId ]
+                SubnetIds: !FindInMap [ Environment, { Ref: Stage }, subnetId ]  
+    LambdaInvokePermission:
+        Type: AWS::Lambda::Permission
+        Properties:
+            FunctionName: !GetAtt BaselExportLambda.Arn
+            Action: lambda:InvokeFunction
+            Principal: s3.amazonaws.com
+            SourceAccount: !Ref AWS::AccountId
+            SourceArn: !FindInMap [ Environment, { Ref: Stage }, s3NotificationBucketArn ]
+    LambdaLayer:
+        Type: AWS::Lambda::LayerVersion
+        Properties: 
+            Content:
+                S3Bucket:  !FindInMap [ Environment, { Ref: Stage }, s3LambdaCodeBucket ]
+                S3Key: !Ref LambdaCodeKey
+            LayerName: LambdaLayerBaselExport
+    #Abaixo configs relacionados ao cloud watch
+    ScheduleRule:
+        Type: 'AWS::Events::Rule'
+        Properties:
+            Name: "EventBaselExportLambdaDefault"
+            Description: Event rule to atack the service Lambda to BaselServiceLambda
+            State: ENABLED
+            ScheduleExpression: "cron(00 18 ? * MON-FRI *)"
+            EventPattern: 
+                source:
+                - BaselExportLambda
+            Targets:
+                - Id: "EventBusName"
+                  Arn: !GetAtt BaselExportLambda.Arn
+                  Input: !FindInMap [ Environment, { Ref: Stage }, environmentService ]
+    ScheduleRuleEndOfMonth:
+        Type: 'AWS::Events::Rule'
+        Properties:
+            Name: "EventBaselExportLambdaEndOfMonth"
+            Description: Event rule to atack the service Lambda to BaselServiceLambda only in end of month
+            State: ENABLED
+            ScheduleExpression: "cron(00 13 30 * ? *)"
+            EventPattern: 
+                source:
+                - BaselExportLambda
+            Targets:
+                - Id: "EventBusName"
+                  Arn: !GetAtt BaselExportLambda.Arn
+                  Input: !FindInMap [ Environment, { Ref: Stage }, environmentService ]  
+    PermissionForEventsToInvokeLambda: 
+        Type: AWS::Lambda::Permission
+        Properties: 
+            FunctionName: !Ref "BaselExportLambda"
+            Action: "lambda:InvokeFunction"
+            Principal: "events.amazonaws.com"
+            SourceArn: 
+                Fn::GetAtt: 
+                - "ScheduleRule"
+                - "Arn"
+
+                                                                         
+
+            
+
+            
