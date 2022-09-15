@@ -1,0 +1,11 @@
+Testar 26/06 e 27/06
+
+Parametros para geração do arquivo monitor no lambda
+
+tbbasel."produto_sig"
+, tbbasel."ds_estrategia"
+, tbbasel."desk"
+, tbbasel."book"
+, tbbasel."contraparte"
+, tbbasel."empresa"
+
